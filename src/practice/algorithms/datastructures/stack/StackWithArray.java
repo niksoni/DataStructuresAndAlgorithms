@@ -4,33 +4,36 @@
  */
 package practice.algorithms.datastructures.stack;
 
+import practice.algorithms.datastructures.UnderFlowException;
+
 /**
  * @author sonin
  *
  */
-public class StackWithArray {
+public class StackWithArray<T> {
 	
-	private String[] strings;
-	private int N = 0;
+	private T[] items;
+	private int n = 0;
 	
+	@SuppressWarnings("unchecked")
 	public StackWithArray(int capacity) {
-		strings = new String[capacity];
+		items = (T[]) new Object[capacity];
 	}
 	
 	public boolean isEmpty() {
-		return N == 0;
+		return n == 0;
 	}
 	
-	public void push(String item) {
-		strings[N++] = item;
+	public void push(T item) {
+		items[n++] = item;
 	}
 	
-	public String pop() throws StackUnderFlowException {
-		if (N==0) {
-			throw new StackUnderFlowException();
+	public T pop() throws UnderFlowException {
+		if (isEmpty()) {
+			throw new UnderFlowException();
 		}
-		String item = strings[--N];
-		strings[N] = null;
+		T item = items[--n];
+		items[n] = null;
 		return item;
 	}
 }

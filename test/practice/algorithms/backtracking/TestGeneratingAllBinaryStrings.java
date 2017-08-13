@@ -21,7 +21,7 @@ public class TestGeneratingAllBinaryStrings {
 		GeneratingBinaryString generator = new GeneratingBinaryString(noOfBits);
 		ArrayList<String> actualResult = generator.getBinaryString(noOfBits);
 		
-		ArrayList<String> expectedResult = new ArrayList();
+		ArrayList<String> expectedResult = new ArrayList<String>();
 		expectedResult.add("[0, 0]");
 		expectedResult.add("[1, 0]");
 		expectedResult.add("[0, 1]");

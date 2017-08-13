@@ -7,43 +7,51 @@
  */
 package practice.algorithms.datastructures.stack;
 
+import practice.algorithms.datastructures.UnderFlowException;
+
 /**
  * @author sonin
  *
  */
-public class StackWithResizingArray {
+public class StackWithResizingArray<T> {
 	
-	private String[] strings;
-	private int N;
+	private T[] items;
+	private int n;
 	
+	@SuppressWarnings("unchecked")
 	public StackWithResizingArray() {
-		strings = new String[1];
+		items = (T[]) new Object[1];
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void resize(int capacity) {
-		String[] copy = new String[capacity];
+		T[] copy = (T[]) new Object[capacity];
 		for (int i=0; i<capacity; i++) {
-			copy[i] = strings[i];
+			copy[i] = items[i];
 		}
-		strings = copy;
+		items = copy;
 	}
 	
-	public void push(String item) {
-		if (N==strings.length) 
-			resize(2 * strings.length);
-		
-		strings[N++] = item;
+	public boolean isEmpty() {
+		return n == 0;
 	}
 	
-	public String pop() throws StackUnderFlowException {
-		if (N==0) {
-			throw new StackUnderFlowException();
+	public void push(T item) {
+		if (n==items.length) 
+			resize(2 * items.length);
+		
+		items[n++] = item;
+	}
+	
+	public T pop() throws UnderFlowException {
+		if (isEmpty()) {
+			throw new UnderFlowException();
 		}
 		
-		String item = strings[--N];
-		strings[N] = null;
-		if (N>0 && N==strings.length/4) 
-			resize(strings.length/2);
+		T item = items[--n];
+		items[n] = null;
+		if (n>0 && n==items.length/4) 
+			resize(items.length/2);
 		
 		return item;
 	}

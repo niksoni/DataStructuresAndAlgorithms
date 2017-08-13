@@ -9,16 +9,18 @@
  */
 package practice.algorithms.datastructures.stack;
 
+import practice.algorithms.datastructures.UnderFlowException;
+
 /**
  * @author sonin
  *
  */
-public class StackWithLinkedList {
+public class StackWithLinkedList<T> {
 	
 	private Node first = null;
 	
 	private class Node {
-		String item;
+		T item;
 		Node next;
 	}
 	
@@ -26,18 +28,18 @@ public class StackWithLinkedList {
 		return first==null;
 	}
 	
-	public void push(String item) {
+	public void push(T item) {
 		Node oldFirst = first;
 		first = new Node();
 		first.item = item;
 		first.next = oldFirst;
 	}
 	
-	public String pop() throws StackUnderFlowException {
-		if (first == null) {
-			throw new StackUnderFlowException();
+	public T pop() throws UnderFlowException {
+		if (isEmpty()) {
+			throw new UnderFlowException();
 		}
-		String item = first.item;
+		T item = first.item;
 		first = first.next;
 		return item;
 	}
