@@ -3,13 +3,16 @@
  */
 package practice.algorithms.datastructures.queue;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import practice.algorithms.datastructures.UnderFlowException;
 
 /**
  * @author sonin
  *
  */
-public class QueueWithLinkedList<T> {
+public class QueueWithLinkedList<T> implements Iterable<T>{
 
 	private Node first;
 	private Node last;
@@ -49,4 +52,33 @@ public class QueueWithLinkedList<T> {
 		return item;
 	}
 
+	@Override
+	public Iterator<T> iterator() {
+		return new ListIterator();
+	}
+
+	private class ListIterator implements Iterator<T> {
+
+		private Node current = first;
+
+		@Override
+		public boolean hasNext() {
+			return current != null;
+		}
+
+		@Override
+		public T next() {
+			if (current == null) {
+				throw new NoSuchElementException();
+			}
+			T item= current.item;
+			current = current.next;
+			return item;
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+	}
 }

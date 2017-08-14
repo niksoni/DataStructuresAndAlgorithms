@@ -11,23 +11,23 @@ import practice.algorithms.datastructures.UnderFlowException;
  *
  */
 public class StackWithArray<T> {
-	
+
 	private T[] items;
 	private int n = 0;
-	
+
 	@SuppressWarnings("unchecked")
 	public StackWithArray(int capacity) {
 		items = (T[]) new Object[capacity];
 	}
-	
+
 	public boolean isEmpty() {
 		return n == 0;
 	}
-	
+
 	public void push(T item) {
 		items[n++] = item;
 	}
-	
+
 	public T pop() throws UnderFlowException {
 		if (isEmpty()) {
 			throw new UnderFlowException();

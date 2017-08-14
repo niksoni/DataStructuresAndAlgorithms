@@ -7,22 +7,25 @@
  */
 package practice.algorithms.datastructures.stack;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import practice.algorithms.datastructures.UnderFlowException;
 
 /**
  * @author sonin
  *
  */
-public class StackWithResizingArray<T> {
-	
+public class StackWithResizingArray<T> implements Iterable<T>{
+
 	private T[] items;
 	private int n;
-	
+
 	@SuppressWarnings("unchecked")
 	public StackWithResizingArray() {
 		items = (T[]) new Object[1];
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private void resize(int capacity) {
 		T[] copy = (T[]) new Object[capacity];
@@ -31,28 +34,56 @@ public class StackWithResizingArray<T> {
 		}
 		items = copy;
 	}
-	
+
 	public boolean isEmpty() {
 		return n == 0;
 	}
-	
+
 	public void push(T item) {
 		if (n==items.length) 
 			resize(2 * items.length);
-		
+
 		items[n++] = item;
 	}
-	
+
 	public T pop() throws UnderFlowException {
 		if (isEmpty()) {
 			throw new UnderFlowException();
 		}
-		
+
 		T item = items[--n];
 		items[n] = null;
 		if (n>0 && n==items.length/4) 
 			resize(items.length/2);
-		
+
 		return item;
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new ReverseArrayIterator();
+	}
+
+	private class ReverseArrayIterator implements Iterator<T> {
+
+		private int i = n;
+
+		@Override
+		public boolean hasNext() {
+			return i >= 0;
+		}
+
+		@Override
+		public T next() {
+			if (i < 0) {
+				throw new NoSuchElementException();
+			}
+			return items[--i];
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
 	}
 }

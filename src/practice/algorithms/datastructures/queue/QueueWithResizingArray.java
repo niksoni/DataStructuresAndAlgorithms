@@ -1,7 +1,10 @@
 /**
-*
-**/
+ *
+ **/
 package practice.algorithms.datastructures.queue;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import practice.algorithms.datastructures.UnderFlowException;
 
@@ -9,7 +12,7 @@ import practice.algorithms.datastructures.UnderFlowException;
  * @author sonin
  *
  */
-public class QueueWithResizingArray<T> {
+public class QueueWithResizingArray<T> implements Iterable<T>{
 
 	private T[] items;
 	private int head;
@@ -64,5 +67,33 @@ public class QueueWithResizingArray<T> {
 			resetAndResize(items.length/2);
 		}
 		return item;
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new ArrayIterator();
+	}
+
+	private class ArrayIterator implements Iterator<T> {
+
+		private int i = head;
+
+		@Override
+		public boolean hasNext() {
+			return i < tail;
+		}
+
+		@Override
+		public T next() {
+			if (i >= tail) {
+				throw new NoSuchElementException();
+			}
+			return items[i++];
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
 	}
 }
